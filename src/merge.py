@@ -1,5 +1,7 @@
 """Code for merging two sorted lists."""
 
+from collections import deque
+
 
 def merge(x: list[int], y: list[int]) -> list[int]:
     """
@@ -11,12 +13,15 @@ def merge(x: list[int], y: list[int]) -> list[int]:
     >>> merge([1, 2, 4, 6], [1, 3, 4, 5])
     [1, 1, 2, 3, 4, 4, 5, 6]
     """
-    i, j = 0, 0
-    z = []  # a new list to copy elements into
-    # FIXME: fill out the loop so you merge the lists
-    # until one of them is empty
-    while i < len(x) and j < len(y):
-        break  # FIXME: you shouldn't just break here
-    # At least one of the lists is empty now. Copy the
-    # remainder of the other into z.
-    return z
+    x, y = deque(x), deque(y)
+    ans = []
+    while x and y:
+        if x[0] < y[0]:
+            ans.append(x.popleft())
+        else:
+            ans.append(y.popleft())
+    if x:
+        ans.extend(x)
+    elif y:
+        ans.extend(y)
+    return ans
